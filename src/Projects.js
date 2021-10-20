@@ -1,4 +1,4 @@
-import './banner-image.css';
+import './custom.css';
 
 const Projects = () => {
     return (

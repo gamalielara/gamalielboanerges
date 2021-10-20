@@ -3,7 +3,7 @@
     opacity: .7;
 }
 
-.my-works-skills{
+.my-works-skills, .center{
     transform: translate(-50%, -50%);
 }
 

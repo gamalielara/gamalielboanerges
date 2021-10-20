@@ -5,7 +5,7 @@ const Header = () => {
     const [clicked, setClicked] = useState(false); 
 
     return ( 
-        <header className="p-4 fixed top-0 right-0 w-full md:bg-gradient-to-b from-black to-transparent mb-8 sm:mb-0 z-10">
+        <header className="p-4 fixed top-0 right-0 w-full mb-8 sm:mb-0 z-50">
             <nav className="sm:flex justify-end items-end gap-4 hidden">
                 <button className="hover:bg-gum-red rounded py-1 px-2 transition-all"><h1 className="text-lg text-white"><Link to="/">Home</Link></h1></button>
                 <button className="hover:bg-gum-red rounded py-1 px-2 transition-all"><h1 className="text-lg text-white"><Link to='/projects'>My Skills & Works</Link></h1></button>
