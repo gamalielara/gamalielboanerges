@@ -1,11 +1,62 @@
-import { BrowserRouter, Link } from "react-router-dom";
+import './banner-image.css';
 
 const Projects = () => {
-    return (  
-        // <BrowserRouter basename="/projects">
-            <section className="my-projects text-white w-full h-auto absolute p-4 bg-black">
+    return (
+        <div className="myskills-projects-wrapper">
+            <div className="banner w-full h-screen relative after:absolute after:top-0 after:left-0 after:bg-gum-dark-red after:opacity-30">
+                <h1 className="my-works-skills absolute text-5xl lg:text-7xl text-white font-bold mb-4 md:mb-8 top-1/2 left-1/2 z-10">My Skills & Works</h1>
+                <img src="img/skills/img.jpg" alt="My Skills and Works Banner Image" className="object-cover w-full h-full absolute top-0 left-0"/>
+            </div>
+            <section className="skills w-full min-h-screen my-8">
+                <h1 className="text-5xl lg:text-7xl text-gum-dark-red font-bold mb-4 md:mb-8">My Skills</h1>
+                <div className="myskills flex flex-wrap sm:px-4 md:w-5/6 mx-auto w-full justify-center items-center">
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/python.png" alt="Python" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">Python</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/html.png" alt="HTML 5" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">HTML 5</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/css.png" alt="CSS 3" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">CSS 3</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/js.png" alt="Javascript" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">JavaScript</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/tailwind.png" alt="Tailwind" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">CSS Framework: Tailwind</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/bootstrap.png" alt="Bootstrap" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">CSS Framework: Bootstrap</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/react.png" alt="React Js" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">React Js</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/php.png" alt="PHP" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">PHP</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/ps.png" alt="Adobe Photoshop" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">Adobe Photoshop</h3>
+                    </div>
+                    <div className="lg:w-1/6 sm:w-1/3 w-1/4 mx-4">
+                        <img src="img/skills/ai.png" alt="Adobe Illustrator" className="object-contain w-full"/>
+                        <h3 className="text-white font-semibold">Adobe Illustrator</h3>
+                    </div>
+                </div>
+            </section>
+
+            <section className="my-projects text-white w-full p-4 bg-black my-4">
                 <div className="my-projects-container">
                     <h1 className="text-5xl lg:text-7xl text-gum-dark-red font-bold">My Projects</h1>
+
                     <div className="projects flex flex-wrap w-full justify-center align-middle mt-4">
 
                         <div className="project-card hover:bg-gum-dark-red bg-gum-red lg:w-1/4 w-5/6 m-4 transition-all rounded-lg">
@@ -95,7 +146,7 @@ const Projects = () => {
                     </div>
                 </div>
             </section>
-        // </BrowserRouter>
+        </div>
     );
 }
  

@@ -3,7 +3,6 @@ import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './Header.js';
 import Landing from './Landing.js';
 import Projects from './Projects.js';
-import Skills from './Skills.js';
 
 function App() {
   return (
@@ -16,9 +15,6 @@ function App() {
           </Route>
           <Route exact path="/projects">
             <Projects/>
-          </Route>
-          <Route exact path="/skills">
-            <Skills/>
           </Route>
         </Switch>
       </Router>
