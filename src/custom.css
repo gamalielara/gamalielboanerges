@@ -1,5 +1,4 @@
-.banner{
-    position: relative;
+.gradient{
     opacity: .7;
 }
 
@@ -7,7 +6,7 @@
     transform: translate(-50%, -50%);
 }
 
-.banner::after{
+.gradient::after{
     content: "";
     position: absolute;
     top: 0;
@@ -15,5 +14,30 @@
     width: 100%;
     height: 100%;
     background-image: linear-gradient(to bottom, #000, #810000);
-    opacity: .8;
+    opacity: .6;
+}
+
+.me-image{
+    background-image: url(img/me2.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-width: 950px) {
+    .me-image{
+        background-position-x: 20%;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .me-image{
+        background-position-x: 50%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .me-image{
+        background-position-x: 60%;
+    }
 }

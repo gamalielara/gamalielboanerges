@@ -1,16 +1,21 @@
 import { useState } from 'react';
-import { Link, BrowserRouter as Router} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     const [clicked, setClicked] = useState(false); 
 
+    window.addEventListener('scroll', () => {
+        const theHeader = document.getElementById('header');
+        theHeader.classList.toggle('bg-black', window.scrollY > 10);
+    });
+
     return ( 
-        <header className="p-4 fixed top-0 right-0 w-full mb-8 sm:mb-0 z-50">
-            <nav className="sm:flex justify-end items-end gap-4 hidden">
+        <header className="p-4 fixed top-0 right-0 w-full mb-8 sm:mb-0 z-50 transition-all ease-in-out" id="header">
+            <nav className="sm:flex justify-end items-end gap-4 hidden px-4">
                 <button className="hover:bg-gum-red rounded py-1 px-2 transition-all"><h1 className="text-lg text-white"><Link to="/">Home</Link></h1></button>
                 <button className="hover:bg-gum-red rounded py-1 px-2 transition-all"><h1 className="text-lg text-white"><Link to='/projects'>My Skills & Works</Link></h1></button>
                 <button className="hover:bg-gum-red rounded py-1 px-2 transition-all"><h1 className="text-lg text-white"><a href="https://www.gumrindelwald.com" target="_blank">My Blog</a></h1></button>
-                <button className="hover:bg-gum-red rounded py-1 px-2 transition-all"><h1 className="text-lg text-white">About Me</h1></button>
+                <button className="hover:bg-gum-red rounded py-1 px-2 transition-all"><h1 className="text-lg text-white"><Link to="/about-me">About Me</Link></h1></button>
             </nav>
             <nav className="small-nav-menu fixed top-0 right-0 w-full sm:hidden">
                 <div className={clicked ? "full-menu w-screen h-screen bg-black p-4 relative" : "hidden"}>
@@ -19,7 +24,7 @@ const Header = () => {
                         <button className="hover:bg-gum-red rounded py-1 px-2 transition-all" onClick={() => setClicked(false)}><h1 className="text-lg text-white"><Link to="/">Home</Link></h1></button>
                         <button className="hover:bg-gum-red rounded py-1 px-2 transition-all" onClick={() => setClicked(false)}><h1 className="text-lg text-white"><Link to='/projects'>My Skills & Works</Link></h1></button>
                         <button className="hover:bg-gum-red rounded py-1 px-2 transition-all" onClick={() => setClicked(false)}><h1 className="text-lg text-white"><a href="https://www.gumrindelwald.com" target="_blank">My Blog</a></h1></button>
-                        <button className="hover:bg-gum-red rounded py-1 px-2 transition-all" onClick={() => setClicked(false)}><h1 className="text-lg text-white">About Me</h1></button>
+                        <button className="hover:bg-gum-red rounded py-1 px-2 transition-all" onClick={() => setClicked(false)}><h1 className="text-lg text-white"><Link to="/about-me">About Me</Link></h1></button>
                     </div>
                 </div>
                 <div className="nav-container w-full relative">
