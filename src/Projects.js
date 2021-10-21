@@ -77,8 +77,8 @@ const Projects = () => {
                                     <span className="bg-black m-2 p-2 rounded text-xs">JavaScript</span>
                                 </div>
                                 <div className="links flex justify-center mt-2">
-                                    <div className="link  m-2 p-1 hover:bg-gum-red cursor-pointer rounded transition-all"><a href="#" target="_blank" className="underline text-sm">Code<i class="fas fa-code ml-2"></i></a></div>
-                                    <div className="link  m-2 p-1 hover:bg-gum-red cursor-pointer rounded transition-all"><a href="#" target="_blank" className="underline text-sm">Website<i class="fas fa-external-link-alt ml-2"></i></a></div>
+                                    <div className="link  m-2 p-1 hover:bg-gum-red cursor-pointer rounded transition-all"><a href="https://github.com/gamalielara/folklorevermore-chess" target="_blank" className="underline text-sm">Code<i class="fas fa-code ml-2"></i></a></div>
+                                    <div className="link  m-2 p-1 hover:bg-gum-red cursor-pointer rounded transition-all"><a href="https://gamalielara.github.io/folklorevermore-chess/" target="_blank" className="underline text-sm">Website<i class="fas fa-external-link-alt ml-2"></i></a></div>
                                 </div>
                             </div>
                         </motion.div>
