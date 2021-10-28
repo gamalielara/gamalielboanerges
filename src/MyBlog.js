@@ -6,7 +6,7 @@ const MyBlog = () => {
         <section className="my-blog w-full h-screen relative">
             <div className="content absolute top-1/2 left-1/2 w-full center z-10 flex flex-col gap-4 justify-center items-center">
                 <motion.img src="img/gumrindelwald-logo.svg" alt="gumrindelwald logo" className="w-1/2 object-contain z-10" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.25, duration:1}}/>
-                <motion.article class="px-4 text-white md:w-3/4 sm:w-5/6 w-full md:text-base text-sm" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.5, duration:1}}>
+                <motion.article class="px-4 text-white md:w-3/4 sm:w-5/6 w-full lg:text-lg md:text-base text-sm" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.5, duration:1}}>
                     <p class="md:mb-4 mb-2">Hello! Welcome to gumrindelwald, my personal blog site. I am Ara Gamaliel, the man behind this blog site. I am the sole creator, developer and author in this site. Up until now, I am a college student and I study engineering science in Faculty of Engineering Universitas Indonesia.</p>
                     <p class="md:mb-4 mb-2">Writing has been the most comfortable for me to express myself, my thoughts and my emotions. Therefore, writing activity has always been fun for me. For the first time, I started writing blog in 2012, when I was 12, in a medium called blogspot.</p>
                     <p class="md:mb-4 mb-2">In this blog, I write book and film reviews, mostly. But I also shares some of my personal thoughts and things that I have been fascinating with, such as science or psychology.</p>
