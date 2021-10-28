@@ -66,7 +66,7 @@ const Projects = () => {
                             <img src="img/works/folklorevermore-chess.jpg" alt="the folklorevermore chess" className="w-full object-contain mx-auto"/>
                             <div className="project-desc p-2">
                                 <h3 className="text-xl my-2 italic">The folklorevermore Chess</h3>
-                                <p>
+                                <p className="text-lg">
                                     a chess game created using HTML, CSS and JavaScript (OOP, DOM Modifications, etc). Some features might not work, such as en passant move. 
                                     I honestly do not know why I named this game as 'folkloreveremore', but I think it is to show the authenticity and to show that I really 
                                     built and developed this game from scratch. created by Ara Gamaliel.
@@ -87,7 +87,7 @@ const Projects = () => {
                             <img src="img/works/toDo.jpeg" alt="the toDo app" className="w-full object-contain mx-auto"/>
                             <div className="project-desc p-2">
                                 <h3 className="text-xl my-2 italic">toDo App</h3>
-                                <p>
+                                <p className="text-lg">
                                 A to-do-list application created using React Js. The user can add to do, add them in certain categories, 
                                 mark them as completed/uncompleted and the user can also add new customized categories.
                                 </p>
@@ -107,7 +107,7 @@ const Projects = () => {
                             <img src="img/works/libshelf.jpg" alt="the toDo app" className="w-full object-contain mx-auto"/>
                             <div className="project-desc p-2">
                                 <h3 className="text-xl my-2 italic">libSHELF App</h3>
-                                <p>
+                                <p className="text-lg">
                                 A simple CRUD application to register and store our books, rate them and give them our short and full review. 
                                 Right now the visitor can only view the website without changing the any data in the website. Created with PHP native.
                                 </p>
@@ -131,7 +131,7 @@ const Projects = () => {
                             <div className="project-desc p-2">
                                 
                             <h3 className="text-xl my-2 italic">gumrindelwald</h3>
-                            <p>
+                            <p className="text-lg">
                                 A blog template created using Tailwindcss and Vanila Javascript. 
                             </p>
                             <div className="categories flex flex-wrap w-full justify-center my-2">

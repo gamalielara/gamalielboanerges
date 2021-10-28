@@ -10,13 +10,22 @@
     src: url("fonts/Trouble Font.woff") format("woff"),
     url("fonts/Trouble Font.otf") format("opentype"),
     url("fonts/Trouble Font.svg") format("svg");
-    }
+  }
+
+  @font-face {
+    font-family: "gumrindelwald paragraph";
+    src: url("fonts/futura-condensed.otf");
+    font-weight: normal;
+    font-style: normal;
+  }
 
   *{
-    font-family: "gumrindelwald", sans-serif;
+    font-family: "gumrindelwald", Helvetica, sans-serif;
     font-weight: normal;
     letter-spacing: .75px;
   }
+
+  p{font-family: "gumrindelwald paragraph", Helvetica, sans-serif !important}
   
   h1, h2{
     font-style: italic;
