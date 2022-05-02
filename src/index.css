@@ -3,32 +3,31 @@
 @tailwind utilities;
 
 @layer utilities {
+  @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-  @font-face {
-    font-family: "gumrindelwald";
-    src: url("fonts/Trouble Font.eot");
-    src: url("fonts/Trouble Font.woff") format("woff"),
-    url("fonts/Trouble Font.otf") format("opentype"),
-    url("fonts/Trouble Font.svg") format("svg");
-  }
-
-  @font-face {
-    font-family: "gumrindelwald paragraph";
-    src: url("fonts/futura-condensed.otf");
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  *{
-    font-family: "gumrindelwald", Helvetica, sans-serif;
-    font-weight: normal;
-    letter-spacing: .75px;
-  }
-
-  p{font-family: "gumrindelwald paragraph", Helvetica, sans-serif !important}
-  
-  h1, h2{
+  h1,
+  h2,
+  h3 {
+    font-family: "Bebas Neue", Helvetica, sans-serif;
     font-style: italic;
+    letter-spacing: 0.75px;
+    font-weight: 600;
   }
-  
+
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  a {
+    font-family: "Inter", Helvetica, sans-serif;
+    font-weight: 500;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+  }
 }
