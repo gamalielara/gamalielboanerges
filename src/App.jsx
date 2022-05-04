@@ -8,7 +8,7 @@ import MyBlog from "./pages/MyBlog.jsx";
 
 function App() {
   return (
-    <div className="App bg-black h-screen">
+    <div className="App h-screen">
       <Router>
         <Header />
         <Switch>

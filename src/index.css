@@ -6,6 +6,29 @@
   @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
+  body {
+    transition: 1s all ease-in;
+    background-color: #171717;
+    --background-color: #171717;
+    --text-color: #e5e5e5;
+  }
+
+  body.light {
+    background-color: #e5e5e5;
+    --text-color: #171717;
+    --background-color: #e5e5e5;
+  }
+
+  body * {
+    transition: 1s all ease-in;
+    color: var(--text-color);
+  }
+
+  header,
+  section {
+    background-color: var(--background-color);
+  }
+
   h1,
   h2,
   h3 {
@@ -13,6 +36,7 @@
     font-style: italic;
     letter-spacing: 0.75px;
     font-weight: 600;
+    color: var(--text-color);
   }
 
   h4,
@@ -23,11 +47,20 @@
   a {
     font-family: "Inter", Helvetica, sans-serif;
     font-weight: 500;
+    color: var(--text-color);
   }
 
   h4,
   h5,
   h6 {
     font-weight: 600;
+  }
+
+  .project-card {
+    background-color: var(--text-color);
+  }
+
+  .project-desc-text {
+    color: var(--background-color);
   }
 }
