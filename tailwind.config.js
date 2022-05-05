@@ -1,16 +1,12 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    fontFamily: {
-      'body' : ["Poppins", "Open Sans", "Helvetica"]
-    },
     extend: {
-      colors: {
-        'gum-dark' : '#1B1717',
-        'gum-dark-red' : '#810000',
-        'gum-red' : '#CE1212',
-        'gum-light' : '#EEEBDD'
+      backgroundPosition: {
+        "x-20": "20% 0",
+        "x-50": "50% 0",
+        "x-60": "60% 0",
       },
     },
   },
@@ -18,4 +14,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};

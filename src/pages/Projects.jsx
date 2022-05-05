@@ -7,7 +7,7 @@ import { MYSKILLS } from "../data/mySkill";
 const Projects = () => {
   return (
     <motion.div
-      className="myskills-projects-wrapper"
+      className="myskills-projects-wrapper pb-16 md:pb-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >

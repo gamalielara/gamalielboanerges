@@ -3,17 +3,19 @@ import { motion } from "framer-motion";
 const MyBlog = () => {
   return (
     <section className="my-blog w-full h-screen relative">
-      <div className="content absolute top-1/2 left-1/2 w-full center z-10 flex flex-col gap-4 justify-center items-center">
-        <motion.img
-          src="img/gumrindelwald-logo.svg"
-          alt="gumrindelwald logo"
-          className="w-1/2 object-contain z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.25, duration: 1 }}
-        />
+      <div className="content absolute top-1/2 left-1/2 w-full center z-10 flex flex-col gap-4 justify-center items-center transform -translate-x-1/2 -translate-y-1/2">
+        <a href="https://gumrindelwald.com" rel="noreferrer" target="_blank">
+          <motion.img
+            src="img/gw logo.png"
+            alt="gumrindelwald logo"
+            className="w-5/6 md:w-1/2 object-contain z-10 mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.25, duration: 1 }}
+          />
+        </a>
         <motion.article
-          class="px-4 text-white md:w-3/4 sm:w-5/6 w-full lg:text-lg md:text-base text-sm"
+          class="px-4 text-white md:w-3/4 sm:w-5/6 w-full lg:text-lg md:text-base text-xs"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
@@ -39,20 +41,18 @@ const MyBlog = () => {
           <p class="md:mb-4 mb-2">
             All article in this website (or, at least, in majority) are written
             in both Indonesian and English. And because I currently spend my
-            time learning new languages (German and Russian), you might find
-            some of them are written in German as well (I am still struggling
-            with Russian and its complex grammar, but I will write in Russian in
-            the future).
+            time learning new languages such as German, you might find some of
+            them are written in German as well.
           </p>
         </motion.article>
         <a href="https://gumrindelwald.com/" rel="noreferrer" target="_blank">
           <motion.button
-            className="transition-all bg-transparent border-white border-2 hover:border-0 hover:border-transparent hover:bg-gum-dark-red text-white p-2 mt-8"
+            className="transition-all bg-transparent border-2 hover:border-0 hover:border-transparent p-2"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 1.25 }}
           >
-            <i class="mr-2 fab fa-internet-explorer"></i>VISIT MY PERSONAL BLOG
+            <i class="mr-2 fab fa-internet-explorer"></i>visit gumrindelwald
           </motion.button>
         </a>
       </div>
@@ -61,11 +61,11 @@ const MyBlog = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <img
+        {/* <img
           src="img/gumrindelwald-hero.jpg"
           alt="background"
           className="object-cover w-full h-full absolute top-0 left-0"
-        />
+        /> */}
       </motion.div>
     </section>
   );

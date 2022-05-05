@@ -24,8 +24,8 @@
     color: var(--text-color);
   }
 
-  header,
-  section {
+  section,
+  .bg {
     background-color: var(--background-color);
   }
 
@@ -62,5 +62,23 @@
 
   .project-desc-text {
     color: var(--background-color);
+  }
+
+  .bg-gradient-my-image {
+    background-image: linear-gradient(
+      to top,
+      var(--background-color),
+      transparent
+    );
+    opacity: 0.8;
+    transition: all 0.75 ease;
+  }
+
+  body.light .bg-gradient-my-image {
+    opacity: 0.5;
+  }
+
+  button {
+    border-color: var(--text-color);
   }
 }

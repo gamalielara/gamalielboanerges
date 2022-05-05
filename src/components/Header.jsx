@@ -4,14 +4,19 @@ import { useState } from "react";
 const Header = () => {
   const [darkMode, setDarkMode] = useState(true);
 
+  window.addEventListener("scroll", () => {
+    const header = document.querySelector("header");
+    header.classList.toggle("bg", window.scrollY > 10);
+  });
+
   const darkModeHandler = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle("light");
   };
 
   return (
-    <header className="fixed top-0 right-0 w-full mb-8 sm:mb-0 z-50">
-      <nav className="py-4 px-8 hidden md:flex justify-between transition-all ease-in-out header">
+    <header className="fixed top-0 right-0 w-full mb-8 sm:mb-0 z-50 transition-all ease-in-out ">
+      <nav className="py-4 px-8 hidden md:flex justify-between">
         <div className="menus flex gap-6 items-center">
           <Link to="/">
             <button className="py-1 px-2 transition-all">

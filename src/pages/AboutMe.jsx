@@ -1,23 +1,32 @@
 import { motion } from "framer-motion";
 
 const AboutMe = () => {
+  const meImage = {
+    backgroundImage: "url(img/me2.jpg)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  };
+
   const mystyle = {
     transform: "translateY(-50%)",
   };
+
   return (
-    <section className="about-me w-full min-h-screen relative">
+    <section className="about-me w-full h-screen relative">
+      <div className="bg-gradient-my-image w-full h-full absolute top-0 left-0"></div>
       <motion.div
-        className="me-image gradient w-full min-h-screen"
+        className="me-image w-full min-h-screen bg-x-60 sm:bg-x-50 lg:bg-x-20"
+        style={meImage}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}
       ></motion.div>
       <article
-        className="absolute top-1/2 md:w-1/2 sm:w-2/3 w-full about-me-content md:p-8 p-4"
+        className="absolute top-1/2 lg:w-1/2 sm:w-2/3 w-full about-me-content md:p-8 p-4"
         style={mystyle}
       >
         <motion.h1
-          className="lg:text-9xl text-5xl text-gum-dark-red text-left mb-4"
+          className="lg:text-9xl text-5xl text-left mb-4"
           initial={{ fontSize: "0rem" }}
           animate={{ fontSize: "3rem" }}
           transition={{ delay: 0.75 }}
@@ -25,7 +34,7 @@ const AboutMe = () => {
           ARA GAMALIEL BOANERGES
         </motion.h1>
         <motion.p
-          className="text-white text-lg md:text-xl mt-4 text-justify"
+          className="text-sm sm:text-lg md:text-xl mt-4 text-justify"
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
@@ -41,7 +50,7 @@ const AboutMe = () => {
           consumed in my personal blog website.
         </motion.p>
         <motion.p
-          className="text-white text-lg md:text-xl text-left mt-4"
+          className="text-lg md:text-xl text-left mt-4"
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
@@ -70,6 +79,17 @@ const AboutMe = () => {
             </li>
             <li>
               <a
+                href="https://gumrindelwald.com"
+                rel="noreferrer"
+                target="_blank"
+                className="underline hover:text-gum-red"
+              >
+                <i class="mr-2 fab fa-internet-explorer"></i>
+                gumrindelwald.com
+              </a>
+            </li>
+            <li>
+              <a
                 href="https://github.com/gamalielara"
                 rel="noreferrer"
                 target="_blank"
@@ -91,16 +111,6 @@ const AboutMe = () => {
             </li>
           </ul>
         </motion.p>
-        <a href="https://gumrindelwald.com/" rel="noreferrer" target="_blank">
-          <motion.button
-            className="transition-all bg-transparent border-white border-2 hover:border-0 hover:border-transparent hover:bg-gum-dark-red text-white p-2 mt-8"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.25 }}
-          >
-            <i class="mr-2 fab fa-internet-explorer"></i>VISIT MY PERSONAL BLOG
-          </motion.button>
-        </a>
       </article>
     </section>
   );
