@@ -40,7 +40,7 @@ const CanvasBackground: React.FC = () => {
 
     name.split("").forEach((letter, i) => {
 
-      const letterTexture = LETTERS[letter];
+      const letterTexture = ( LETTERS as Record<string, string> )[letter];
 
       const box = new THREE.BoxGeometry(5, 5, 5);
       const boxTexture = new THREE.TextureLoader().load(letterTexture);
