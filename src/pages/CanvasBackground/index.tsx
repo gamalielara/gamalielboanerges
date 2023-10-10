@@ -64,6 +64,10 @@ const CanvasBackground: React.FC = () => {
   let shouldZoomOut = true;
 
   useEffect(() => {
+    // Hacky way to entirely remove loading container.
+    // This way because the loading container has CSS `transform: preserve-3d`
+    document.getElementById("loading-container")!.style.display = "none";
+
     if ( !mainCanvasRef.current ) return;
 
     sceneRef.current = new THREE.Scene();

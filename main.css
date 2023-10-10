@@ -79,8 +79,7 @@ button:focus-visible {
     --text-black-color: #cbcbcb
 }
 
-.loading-container {
-    z-index: -1;
+#loading-container {
     display: flex;
     height: 100dvh;
     width: 100vw;
