@@ -6,6 +6,7 @@ import { decideCameraMagnifier } from "<utils>/decideCameraMagnifier";
 import { useEffect, useRef } from "react";
 
 const CAMERA_ZOOM_MAGNIFIER = decideCameraMagnifier();
+const ZOOMING_OUT_SPEED = 0.1;
 
 const CanvasBackground: React.FC = () => {
 
@@ -109,7 +110,7 @@ const CanvasBackground: React.FC = () => {
 
     if ( cameraRef.current.position.z >= CAMERA_ZOOM_MAGNIFIER ) shouldZoomOut = false;
 
-    if ( cameraRef.current.position.z <= CAMERA_ZOOM_MAGNIFIER && shouldZoomOut ) cameraRef.current.position.z += 0.5;
+    if ( cameraRef.current.position.z <= CAMERA_ZOOM_MAGNIFIER && shouldZoomOut ) cameraRef.current.position.z += ZOOMING_OUT_SPEED;
 
 
     rotatingBoxes.current.forEach(boxesGroup => {
