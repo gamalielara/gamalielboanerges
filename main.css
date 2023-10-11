@@ -83,7 +83,13 @@ button:focus-visible {
     display: flex;
     height: 100dvh;
     width: 100vw;
-    background-color: var(--background-color)
+    background-color: var(--background-color);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 999;
 }
 
 .loading-wrapper {

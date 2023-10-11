@@ -6,7 +6,7 @@ import { decideCameraMagnifier } from "<utils>/decideCameraMagnifier";
 import { useEffect, useRef } from "react";
 
 const CAMERA_ZOOM_MAGNIFIER = decideCameraMagnifier();
-const ZOOMING_OUT_SPEED = 0.1;
+const ZOOMING_OUT_SPEED = 0.5;
 
 const CanvasBackground: React.FC = () => {
 
@@ -17,23 +17,6 @@ const CanvasBackground: React.FC = () => {
   const rendererRef = useRef<THREE.WebGLRenderer>();
   const controllerRef = useRef<typeof OrbitControls>();
   const rotatingBoxes = useRef<THREE.Group<THREE.Object3DEventMap>[]>();
-
-
-  const drawStars = () => {
-    const sphere = new THREE.SphereGeometry(0.24, 34, 24);
-    const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
-    const star = new THREE.Mesh(sphere, sphereMaterial);
-
-    const [ x, y, z ] = Array.from({ length: 3 }).fill(null).map(() => faker.number.float({
-      min: -300,
-      max: 300,
-      precision: 0.1
-    }));
-
-    star.position.set(x, y, z);
-    sceneRef.current?.add(star);
-
-  };
 
 
   const constructMyNameBoxesGroup = (name: string) => {
@@ -60,14 +43,31 @@ const CanvasBackground: React.FC = () => {
     return group;
   };
 
-
   let shouldZoomOut = true;
 
-  useEffect(() => {
-    // Hacky way to entirely remove loading container.
-    // This way because the loading container has CSS `transform: preserve-3d`
-    document.getElementById("loading-container")!.style.display = "none";
+  function renderAndAnimate() {
+    window.requestAnimationFrame(renderAndAnimate);
 
+    if ( !cameraRef.current || !controllerRef.current || !rendererRef.current || !sceneRef.current || !rotatingBoxes.current ) return;
+
+    if ( cameraRef.current.position.z >= CAMERA_ZOOM_MAGNIFIER ) shouldZoomOut = false;
+
+    if ( cameraRef.current.position.z <= CAMERA_ZOOM_MAGNIFIER && shouldZoomOut ) cameraRef.current.position.z += ZOOMING_OUT_SPEED;
+
+    rotatingBoxes.current.forEach(boxesGroup => {
+      boxesGroup.children.forEach(box => {
+        box.rotation.x += 0.01;
+        box.rotation.y += 0.01;
+        box.rotation.z += 0.01;
+      });
+    });
+
+    controllerRef.current.update();
+
+    rendererRef.current.render(sceneRef.current, cameraRef.current);
+  }
+
+  useEffect(() => {
     if ( !mainCanvasRef.current ) return;
 
     sceneRef.current = new THREE.Scene();
@@ -100,38 +100,65 @@ const CanvasBackground: React.FC = () => {
     new THREE.Box3().setFromObject(rotatingBoxesGroupTop).getCenter(rotatingBoxesGroupTop.position).multiplyScalar(-1);
     new THREE.Box3().setFromObject(rotatingBoxesGroupBottom).getCenter(rotatingBoxesGroupBottom.position).multiplyScalar(-1);
 
-    rotatingBoxesGroupBottom.position.y = -15;
+    rotatingBoxesGroupTop.position.y = 7.5;
+    rotatingBoxesGroupBottom.position.y = -7.5;
 
     sceneRef.current?.add(rotatingBoxesGroupTop, rotatingBoxesGroupBottom);
 
-    Array.from({ length: 1000 }).fill(null).forEach(drawStars);
+    let lastScrollTop = 0;
+
+    const starsWorker = new Worker(new URL("../../utils/worker/drawStars", import.meta.url), { type: "module" });
+
+    starsWorker.onmessage = (event) => {
+      console.time("on message");
+
+      const { data } = event;
+
+      const loader = new THREE.ObjectLoader();
+
+      const stars = loader.parse(data);
+
+
+      for ( const star of stars.children ) {
+
+        const [ x, y, z ] = Array.from({ length: 3 }).fill(null).map(() => faker.number.float({
+          min: -1000,
+          max: 1000,
+          precision: 0.1
+        }));
+
+        star.position.set(x, y, z);
+        sceneRef.current?.add(star);
+      }
+
+      // Hacky way to entirely remove loading container.
+      // This way because the loading container has CSS `transform: preserve-3d`
+      document.getElementById("loading-container")!.style.display = "none";
+
+      renderAndAnimate();
+
+      console.timeEnd("on message");
+    };
+
+    starsWorker.postMessage("generateAndDrawStars");
+
+    document.body.onscroll = () => {
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      if ( st > lastScrollTop ) {
+        // downscroll code
+        cameraRef.current!.position.z += ( st - lastScrollTop );
+      } else if ( st < lastScrollTop ) {
+        // upscroll code
+        cameraRef.current!.position.z += ( st - lastScrollTop );
+      } // else was horizontal scroll
+
+      lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+    };
+
   }, []);
 
-  ( function render() {
-    window.requestAnimationFrame(render);
 
-    if ( !cameraRef.current || !controllerRef.current || !rendererRef.current || !sceneRef.current || !rotatingBoxes.current ) return;
-
-    if ( cameraRef.current.position.z >= CAMERA_ZOOM_MAGNIFIER ) shouldZoomOut = false;
-
-    if ( cameraRef.current.position.z <= CAMERA_ZOOM_MAGNIFIER && shouldZoomOut ) cameraRef.current.position.z += ZOOMING_OUT_SPEED;
-
-
-    rotatingBoxes.current.forEach(boxesGroup => {
-      boxesGroup.children.forEach(box => {
-        box.rotation.x += 0.01;
-        box.rotation.y += 0.01;
-        box.rotation.z += 0.01;
-      });
-    });
-
-    controllerRef.current.update();
-
-    rendererRef.current.render(sceneRef.current, cameraRef.current);
-  } )();
-
-
-  return <canvas ref={ mainCanvasRef } className="top-0 left-0 absolute w-screen h-screen"/>;
+  return <canvas ref={ mainCanvasRef } className="top-0 left-0 fixed w-screen h-screen"/>;
 };
 
 export default CanvasBackground;
