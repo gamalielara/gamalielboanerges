@@ -161,3 +161,8 @@ button:focus-visible {
         transform: translatez(0.5em)
     }
 }
+
+/* in IOS window.innerHeight does not include the broswer bar */
+#main-content > canvas {
+    height: 100vh !important;
+}

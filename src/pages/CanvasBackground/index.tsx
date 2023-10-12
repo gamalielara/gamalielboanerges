@@ -17,6 +17,7 @@ const CanvasBackground: React.FC = () => {
   const rendererRef = useRef<THREE.WebGLRenderer>();
   const controllerRef = useRef<typeof OrbitControls>();
   const rotatingBoxes = useRef<THREE.Group<THREE.Object3DEventMap>[]>();
+  const requestAnimId = useRef<number>();
 
 
   const constructMyNameBoxesGroup = (name: string) => {
@@ -45,8 +46,8 @@ const CanvasBackground: React.FC = () => {
 
   let shouldZoomOut = true;
 
-  function renderAndAnimate() {
-    window.requestAnimationFrame(renderAndAnimate);
+  function renderBoxesAndAnimate() {
+    requestAnimId.current = window.requestAnimationFrame(renderBoxesAndAnimate);
 
     if ( !cameraRef.current || !controllerRef.current || !rendererRef.current || !sceneRef.current || !rotatingBoxes.current ) return;
 
@@ -54,13 +55,15 @@ const CanvasBackground: React.FC = () => {
 
     if ( cameraRef.current.position.z <= CAMERA_ZOOM_MAGNIFIER && shouldZoomOut ) cameraRef.current.position.z += ZOOMING_OUT_SPEED;
 
-    rotatingBoxes.current.forEach(boxesGroup => {
-      boxesGroup.children.forEach(box => {
-        box.rotation.x += 0.01;
-        box.rotation.y += 0.01;
-        box.rotation.z += 0.01;
+    if ( window.scrollY < window.innerHeight ) {
+      rotatingBoxes.current.forEach(boxesGroup => {
+        boxesGroup.children.forEach(box => {
+          box.rotation.x += 0.01;
+          box.rotation.y += 0.01;
+          box.rotation.z += 0.01;
+        });
       });
-    });
+    }
 
     controllerRef.current.update();
 
@@ -71,7 +74,7 @@ const CanvasBackground: React.FC = () => {
     if ( !mainCanvasRef.current ) return;
 
     sceneRef.current = new THREE.Scene();
-    cameraRef.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 1000);
+    cameraRef.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 10000);
     rendererRef.current = new THREE.WebGLRenderer({
       canvas: mainCanvasRef.current!,
     });
@@ -110,13 +113,15 @@ const CanvasBackground: React.FC = () => {
     const starsWorker = new Worker(new URL("../../utils/worker/drawStars", import.meta.url), { type: "module" });
 
     starsWorker.onmessage = (event) => {
-      console.time("on message");
+      console.time("drawing stars");
 
       const { data } = event;
 
+      const { message, stars: starsArrayStringified } = data;
+
       const loader = new THREE.ObjectLoader();
 
-      const stars = loader.parse(data);
+      const stars = loader.parse(starsArrayStringified);
 
 
       for ( const star of stars.children ) {
@@ -124,23 +129,27 @@ const CanvasBackground: React.FC = () => {
         const [ x, y, z ] = Array.from({ length: 3 }).fill(null).map(() => faker.number.float({
           min: -1000,
           max: 1000,
-          precision: 0.1
+          precision: 0.0001
         }));
 
         star.position.set(x, y, z);
         sceneRef.current?.add(star);
       }
 
-      // Hacky way to entirely remove loading container.
-      // This way because the loading container has CSS `transform: preserve-3d`
-      document.getElementById("loading-container")!.style.display = "none";
+      if ( message === "intial render" ) {
+        // Hacky way to entirely remove loading container.
+        // This way because the loading container has CSS `transform: preserve-3d`
+        document.getElementById("loading-container")!.style.display = "none";
+        renderBoxesAndAnimate();
+      }
 
-      renderAndAnimate();
-
-      console.timeEnd("on message");
+      console.timeEnd("drawing stars");
     };
 
-    starsWorker.postMessage("generateAndDrawStars");
+    starsWorker.postMessage("intial render");
+
+    setInterval(() => starsWorker.postMessage("redrawStars"), 500);
+
 
     document.body.onscroll = () => {
       const st = window.pageYOffset || document.documentElement.scrollTop;
@@ -151,6 +160,12 @@ const CanvasBackground: React.FC = () => {
         // upscroll code
         cameraRef.current!.position.z += ( st - lastScrollTop );
       } // else was horizontal scroll
+
+      if ( st > window.innerHeight ) {
+        sceneRef.current?.remove(...rotatingBoxes.current!);
+      } else {
+        sceneRef.current?.add(...rotatingBoxes.current!);
+      }
 
       lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
     };
