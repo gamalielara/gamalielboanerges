@@ -1,62 +1,42 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { faker } from "@faker-js/faker";
-import LETTERS from "<utils>/constants/letters";
 import { decideCameraMagnifier } from "<utils>/decideCameraMagnifier";
 import { useEffect, useRef } from "react";
+import useRotatingBoxes from "<utils>/helpers/useRotatingBoxes.ts";
+import useCameraZoomingOnScroll from "<utils>/helpers/useCameraZoomingOnScroll.ts";
 
 const CAMERA_ZOOM_MAGNIFIER = decideCameraMagnifier();
 const ZOOMING_OUT_SPEED = 0.5;
 
 const CanvasBackground: React.FC = () => {
+  console.log("canvas rendered");
 
   const mainCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  const sceneRef = useRef<THREE.Scene>();
+  const sceneRef = useRef<THREE.Scene>(new THREE.Scene());
   const cameraRef = useRef<THREE.PerspectiveCamera>();
   const rendererRef = useRef<THREE.WebGLRenderer>();
   const controllerRef = useRef<typeof OrbitControls>();
-  const rotatingBoxes = useRef<THREE.Group<THREE.Object3DEventMap>[]>();
   const requestAnimId = useRef<number>();
 
+  const rotatingBoxes = useRotatingBoxes(sceneRef.current);
 
-  const constructMyNameBoxesGroup = (name: string) => {
-    const group = new THREE.Group();
-
-    name.split("").forEach((letter, i) => {
-
-      const letterTexture = ( LETTERS as Record<string, string> )[letter];
-
-      const box = new THREE.BoxGeometry(5, 5, 5);
-      const boxTexture = new THREE.TextureLoader().load(letterTexture);
-
-      const letterBox = new THREE.Mesh(box, new THREE.MeshBasicMaterial({ map: boxTexture }));
-
-      letterBox.position.setX(10 * i);
-
-      letterBox.rotateX(faker.number.int({ max: 6.2, min: 0.017 }));
-      letterBox.rotateY(faker.number.int({ max: 6.2, min: 0.017 }));
-      letterBox.rotateZ(faker.number.int({ max: 6.2, min: 0.017 }));
-
-      group.add(letterBox);
-    });
-
-    return group;
-  };
+  useCameraZoomingOnScroll(cameraRef.current);
 
   let shouldZoomOut = true;
 
   function renderBoxesAndAnimate() {
     requestAnimId.current = window.requestAnimationFrame(renderBoxesAndAnimate);
 
-    if ( !cameraRef.current || !controllerRef.current || !rendererRef.current || !sceneRef.current || !rotatingBoxes.current ) return;
+    if ( !cameraRef.current || !controllerRef.current || !rendererRef.current || !sceneRef.current ) return;
 
     if ( cameraRef.current.position.z >= CAMERA_ZOOM_MAGNIFIER ) shouldZoomOut = false;
 
     if ( cameraRef.current.position.z <= CAMERA_ZOOM_MAGNIFIER && shouldZoomOut ) cameraRef.current.position.z += ZOOMING_OUT_SPEED;
 
     if ( window.scrollY < window.innerHeight ) {
-      rotatingBoxes.current.forEach(boxesGroup => {
+      rotatingBoxes?.forEach(boxesGroup => {
         boxesGroup.children.forEach(box => {
           box.rotation.x += 0.01;
           box.rotation.y += 0.01;
@@ -70,10 +50,10 @@ const CanvasBackground: React.FC = () => {
     rendererRef.current.render(sceneRef.current, cameraRef.current);
   }
 
+  // First set up
   useEffect(() => {
     if ( !mainCanvasRef.current ) return;
 
-    sceneRef.current = new THREE.Scene();
     cameraRef.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 10000);
     rendererRef.current = new THREE.WebGLRenderer({
       canvas: mainCanvasRef.current!,
@@ -93,27 +73,15 @@ const CanvasBackground: React.FC = () => {
     sceneRef.current.add(pointLight, ambientLight);
 
     controllerRef.current = new OrbitControls(cameraRef.current, rendererRef.current.domElement);
-
-    const rotatingBoxesGroupTop = constructMyNameBoxesGroup("GAMALIEL");
-    const rotatingBoxesGroupBottom = constructMyNameBoxesGroup("BOANERGES");
-
-    rotatingBoxes.current = [ rotatingBoxesGroupTop, rotatingBoxesGroupBottom ];
+  }, []);
 
 
-    new THREE.Box3().setFromObject(rotatingBoxesGroupTop).getCenter(rotatingBoxesGroupTop.position).multiplyScalar(-1);
-    new THREE.Box3().setFromObject(rotatingBoxesGroupBottom).getCenter(rotatingBoxesGroupBottom.position).multiplyScalar(-1);
-
-    rotatingBoxesGroupTop.position.y = 7.5;
-    rotatingBoxesGroupBottom.position.y = -7.5;
-
-    sceneRef.current?.add(rotatingBoxesGroupTop, rotatingBoxesGroupBottom);
-
-    let lastScrollTop = 0;
+  // Repeatedly adding stars
+  useEffect(() => {
 
     const starsWorker = new Worker(new URL("../../utils/worker/drawStars", import.meta.url), { type: "module" });
 
     starsWorker.onmessage = (event) => {
-      console.time("drawing stars");
 
       const { data } = event;
 
@@ -142,35 +110,12 @@ const CanvasBackground: React.FC = () => {
         document.getElementById("loading-container")!.style.display = "none";
         renderBoxesAndAnimate();
       }
-
-      console.timeEnd("drawing stars");
     };
 
     starsWorker.postMessage("intial render");
 
     setInterval(() => starsWorker.postMessage("redrawStars"), 500);
-
-
-    document.body.onscroll = () => {
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      if ( st > lastScrollTop ) {
-        // downscroll code
-        cameraRef.current!.position.z += ( st - lastScrollTop );
-      } else if ( st < lastScrollTop ) {
-        // upscroll code
-        cameraRef.current!.position.z += ( st - lastScrollTop );
-      } // else was horizontal scroll
-
-      if ( st > window.innerHeight ) {
-        sceneRef.current?.remove(...rotatingBoxes.current!);
-      } else {
-        sceneRef.current?.add(...rotatingBoxes.current!);
-      }
-
-      lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
-    };
-
-  }, []);
+  }, [ rotatingBoxes ]);
 
 
   return <canvas ref={ mainCanvasRef } className="top-0 left-0 fixed w-screen h-screen"/>;

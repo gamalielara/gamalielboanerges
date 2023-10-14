@@ -13,8 +13,6 @@ const drawStar = () => {
 
 const generateStars = (message: string) => {
   const starsCount = message === "intial render" ? 5000 : 100;
-
-  console.time("generate stars");
   const stars = new THREE.Group();
 
   Array.from({ length: starsCount }).fill(null).forEach(() => {
@@ -23,11 +21,9 @@ const generateStars = (message: string) => {
   });
 
   self.postMessage({ message, stars: stars.toJSON() });
-  console.timeEnd("generate stars");
 };
 
 
 self.onmessage = (event) => {
-  console.log(event.data);
   generateStars(event.data);
 };
