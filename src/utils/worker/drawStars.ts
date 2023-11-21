@@ -2,25 +2,53 @@
 /* @typescript-eslint/no-var-requires */
 // @ts-ignore
 
+import { faker } from "@faker-js/faker";
 import * as THREE from "three";
 
-const drawStar = () => {
-  const sphere = new THREE.SphereGeometry(0.24, 34, 24);
-  const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
-
-  return new THREE.Mesh(sphere, sphereMaterial);
-};
 
 const generateStars = (message: string) => {
-  const starsCount = message === "intial render" ? 5000 : 100;
-  const stars = new THREE.Group();
+  console.time("GENERATE STARS TIME")
 
-  Array.from({ length: starsCount }).fill(null).forEach(() => {
-    const star = drawStar();
-    stars.add(star);
-  });
+  const starsCount = 10e4;
 
-  self.postMessage({ message, stars: stars.toJSON() });
+
+  const particleGeometry = new THREE.BufferGeometry();
+
+  const particlePositions = new Float32Array(starsCount * 3);
+
+
+  const randomScale = starsCount / 50;
+
+
+  for (let i = 0; i < starsCount * 3; i += 3) {
+    particlePositions[i] = faker.number.float({
+      min: randomScale * -1,
+      max: randomScale,
+      precision: 0.0001
+    }); // x-coordinate
+
+    particlePositions[i + 1] = faker.number.float({
+      min: randomScale * -1,
+      max: randomScale,
+      precision: 0.0001
+    }); // y-coordinate
+
+    particlePositions[i + 2] = faker.number.float({
+      min: randomScale * -1,
+      max: randomScale,
+      precision: 0.0001
+    }); // z-coordinate
+  }
+
+  particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
+  const particleMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+
+  const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+
+  self.postMessage({ message: "draw stars completed", stars: particleSystem.toJSON() });
+
+  console.timeEnd("GENERATE STARS TIME")
 };
 
 

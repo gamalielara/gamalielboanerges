@@ -1,15 +1,14 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { faker } from "@faker-js/faker";
 import { decideCameraMagnifier } from "<utils>/decideCameraMagnifier";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import useRotatingBoxes from "<utils>/helpers/useRotatingBoxes.ts";
 import useCameraZoomingOnScroll from "<utils>/helpers/useCameraZoomingOnScroll.ts";
 
 const CAMERA_ZOOM_MAGNIFIER = decideCameraMagnifier();
 const ZOOMING_OUT_SPEED = 0.5;
 
-const CanvasBackground: React.FC = () => {
+const CanvasBackground= React.memo(() => {
   console.log("canvas rendered");
 
   const mainCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -86,25 +85,15 @@ const CanvasBackground: React.FC = () => {
       const { data } = event;
 
       const { message, stars: starsArrayStringified } = data;
+      
 
       const loader = new THREE.ObjectLoader();
 
       const stars = loader.parse(starsArrayStringified);
 
+      sceneRef.current.add(stars);
 
-      for ( const star of stars.children ) {
-
-        const [ x, y, z ] = Array.from({ length: 3 }).fill(null).map(() => faker.number.float({
-          min: -1000,
-          max: 1000,
-          precision: 0.0001
-        }));
-
-        star.position.set(x, y, z);
-        sceneRef.current?.add(star);
-      }
-
-      if ( message === "intial render" ) {
+      if ( message === "draw stars completed" ) {
         // Hacky way to entirely remove loading container.
         // This way because the loading container has CSS `transform: preserve-3d`
         document.getElementById("loading-container")!.style.display = "none";
@@ -112,13 +101,12 @@ const CanvasBackground: React.FC = () => {
       }
     };
 
-    starsWorker.postMessage("intial render");
+    starsWorker.postMessage("draw stars");
 
-    setInterval(() => starsWorker.postMessage("redrawStars"), 500);
   }, [ rotatingBoxes ]);
 
 
   return <canvas ref={ mainCanvasRef } className="top-0 left-0 fixed w-screen h-screen"/>;
-};
+});
 
 export default CanvasBackground;
