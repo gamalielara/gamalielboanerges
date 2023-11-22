@@ -8,7 +8,7 @@ import useCameraZoomingOnScroll from "<utils>/helpers/useCameraZoomingOnScroll.t
 const CAMERA_ZOOM_MAGNIFIER = decideCameraMagnifier();
 const ZOOMING_OUT_SPEED = 0.5;
 
-const CanvasBackground= React.memo(() => {
+const CanvasBackground = React.memo(() => {
   console.log("canvas rendered");
 
   const mainCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -28,13 +28,13 @@ const CanvasBackground= React.memo(() => {
   function renderBoxesAndAnimate() {
     requestAnimId.current = window.requestAnimationFrame(renderBoxesAndAnimate);
 
-    if ( !cameraRef.current || !controllerRef.current || !rendererRef.current || !sceneRef.current ) return;
+    if (!cameraRef.current || !controllerRef.current || !rendererRef.current || !sceneRef.current) return;
 
-    if ( cameraRef.current.position.z >= CAMERA_ZOOM_MAGNIFIER ) shouldZoomOut = false;
+    if (cameraRef.current.position.z >= CAMERA_ZOOM_MAGNIFIER) shouldZoomOut = false;
 
-    if ( cameraRef.current.position.z <= CAMERA_ZOOM_MAGNIFIER && shouldZoomOut ) cameraRef.current.position.z += ZOOMING_OUT_SPEED;
+    if (cameraRef.current.position.z <= CAMERA_ZOOM_MAGNIFIER && shouldZoomOut) cameraRef.current.position.z += ZOOMING_OUT_SPEED;
 
-    if ( window.scrollY < window.innerHeight ) {
+    if (window.scrollY < window.innerHeight) {
       rotatingBoxes?.forEach(boxesGroup => {
         boxesGroup.children.forEach(box => {
           box.rotation.x += 0.01;
@@ -51,7 +51,7 @@ const CanvasBackground= React.memo(() => {
 
   // First set up
   useEffect(() => {
-    if ( !mainCanvasRef.current ) return;
+    if (!mainCanvasRef.current) return;
 
     cameraRef.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 10000);
     rendererRef.current = new THREE.WebGLRenderer({
@@ -82,18 +82,19 @@ const CanvasBackground= React.memo(() => {
 
     starsWorker.onmessage = (event) => {
 
-      const { data } = event;
+      const { message, starPositions } = event.data;
 
-      const { message, stars: starsArrayStringified } = data;
-      
+      const starsGeometry = new THREE.BufferGeometry();
 
-      const loader = new THREE.ObjectLoader();
+      starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
 
-      const stars = loader.parse(starsArrayStringified);
+      const particleMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+
+      const stars = new THREE.Points(starsGeometry, particleMaterial);
 
       sceneRef.current.add(stars);
 
-      if ( message === "draw stars completed" ) {
+      if (message === "draw stars completed") {
         // Hacky way to entirely remove loading container.
         // This way because the loading container has CSS `transform: preserve-3d`
         document.getElementById("loading-container")!.style.display = "none";
@@ -103,10 +104,10 @@ const CanvasBackground= React.memo(() => {
 
     starsWorker.postMessage("draw stars");
 
-  }, [ rotatingBoxes ]);
+  }, [rotatingBoxes]);
 
 
-  return <canvas ref={ mainCanvasRef } className="top-0 left-0 fixed w-screen h-screen"/>;
+  return <canvas ref={mainCanvasRef} className="top-0 left-0 fixed w-screen h-screen" />;
 });
 
 export default CanvasBackground;
