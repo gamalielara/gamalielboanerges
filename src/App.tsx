@@ -1,5 +1,6 @@
 import NavbarMenu from "<components>/Menu";
 import AboutPage from "<pages>/About";
+import CanvasBackground from "<pages>/CanvasBackground";
 import PortfolioPage from "<pages>/Portfolio";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage";
@@ -18,9 +19,10 @@ function App() {
   return (
     <>
       <NavbarMenu/>
-      <PortfolioPage/>
       <HomePage/>
+      <PortfolioPage/>
       <AboutPage/>
+      <CanvasBackground/>
     </>
   );
 }
