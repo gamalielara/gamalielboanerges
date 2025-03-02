@@ -1,5 +1,6 @@
 import NavbarMenu from "<components>/Menu";
 import AboutPage from "<pages>/About";
+import PortfolioPage from "<pages>/Portfolio";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import "./App.css"
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       <NavbarMenu/>
+      <PortfolioPage/>
       <HomePage/>
       <AboutPage/>
     </>

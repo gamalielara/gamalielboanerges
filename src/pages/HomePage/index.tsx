@@ -1,8 +1,10 @@
+import MainSection from "<components>/MainSection";
+
 const HomePage: React.FC = () => (
   <>
-    <section className="w-screen min-h-screen flex items-end justify-center mb-16" id="landing">
+   <MainSection id="landing">
       <p className="text-xl font-bold w-full text-center mb-8">Front-End Software Engineer, Author, Reader</p>
-    </section>
+    </MainSection>
   </>
 );
 

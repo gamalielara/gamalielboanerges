@@ -5,7 +5,7 @@ const NavbarMenu = () => {
       <ul className="flex flex-row items-center justify-between">
         <li className={menuClassName}><a href="#landing">HOME</a></li>
         <li className={menuClassName}><a href="#about-me">ABOUT ME</a></li>
-        <li className={menuClassName}>PORTFOLIO</li>
+        <li className={menuClassName}><a href="#portfolio">PORTFOLIO</a></li>
         <li className={menuClassName}>MY BLOG</li>
       </ul>
     </nav>
