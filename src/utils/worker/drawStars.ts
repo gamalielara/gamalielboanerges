@@ -1,14 +1,13 @@
 import { faker } from "@faker-js/faker";
 
-const generateStars = (message: string) => {
+const generateStars = () => {
   console.time("GENERATE STARS TIME")
 
   const starsCount = 10e4;
 
   const particlePositions = new Float32Array(starsCount * 3);
 
-  const randomScale = starsCount / 30;
-
+  const randomScale = starsCount/5;
 
   for (let i = 0; i < starsCount * 3; i += 3) {
     particlePositions[i] = faker.number.float({
@@ -36,6 +35,6 @@ const generateStars = (message: string) => {
 };
 
 
-self.onmessage = (event) => {
-  generateStars(event.data);
+self.onmessage = () => {
+  generateStars();
 };

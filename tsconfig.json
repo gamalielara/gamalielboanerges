@@ -24,10 +24,13 @@
     "baseUrl": "./src",
     "paths": {
       "<assets>/*": [
-        "./assets/*"
+        "./src/assets/*"
       ],
       "<utils>/*": [
-        "./utils/*"
+        "./src/utils/*"
+      ],
+      "<components>/*": [
+        "./src/components/*"
       ]
     }
   },

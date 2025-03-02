@@ -6,17 +6,17 @@ import useRotatingBoxes from "<utils>/helpers/useRotatingBoxes.ts";
 import useCameraZoomingOnScroll from "<utils>/helpers/useCameraZoomingOnScroll.ts";
 
 const CAMERA_ZOOM_MAGNIFIER = decideCameraMagnifier();
-const ZOOMING_OUT_SPEED = 0.5;
+const ZOOMING_OUT_SPEED = 0.2;
 
 const CanvasBackground = React.memo(() => {
   console.log("canvas rendered");
 
   const mainCanvasRef = useRef<HTMLCanvasElement>(null);
-
   const sceneRef = useRef<THREE.Scene>(new THREE.Scene());
   const cameraRef = useRef<THREE.PerspectiveCamera>();
   const rendererRef = useRef<THREE.WebGLRenderer>();
   const controllerRef = useRef<typeof OrbitControls>();
+  const starsRef = useRef<THREE.Points | null>(null);
   const requestAnimId = useRef<number>();
 
   const rotatingBoxes = useRotatingBoxes(sceneRef.current);
@@ -49,6 +49,36 @@ const CanvasBackground = React.memo(() => {
     rendererRef.current.render(sceneRef.current, cameraRef.current);
   }
 
+  const resizeCanvas = () => {
+    if (!mainCanvasRef.current) return;
+
+    // Update canvas size
+    mainCanvasRef.current.width = window.innerWidth;
+    mainCanvasRef.current.height = window.innerHeight;
+
+    // Update camera aspect ratio
+    if (cameraRef.current) {
+      cameraRef.current.aspect = window.innerWidth / window.innerHeight;
+      cameraRef.current.updateProjectionMatrix();
+    }
+
+    // Update renderer size
+    if (rendererRef.current) {
+      rendererRef.current.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // Remove old stars before redrawing
+    if (starsRef.current) {
+      sceneRef.current.remove(starsRef.current);
+      starsRef.current.geometry.dispose();
+      starsRef.current.material.dispose();
+      starsRef.current = null;
+    }
+
+    // Redraw stars
+    drawStars();
+  };
+
   // First set up
   useEffect(() => {
     if (!mainCanvasRef.current) return;
@@ -68,16 +98,18 @@ const CanvasBackground = React.memo(() => {
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.01);
 
-    // const gridHelper = new THREE.GridHelper(30, 30);
     sceneRef.current.add(pointLight, ambientLight);
 
     controllerRef.current = new OrbitControls(cameraRef.current, rendererRef.current.domElement);
   }, []);
 
-
-  // Repeatedly adding stars
   useEffect(() => {
+    if(!mainCanvasRef.current) return;
 
+    window.addEventListener("resize", resizeCanvas, false);
+  }, [mainCanvasRef.current]);
+
+  const drawStars = () => {
     const starsWorker = new Worker(new URL("../../utils/worker/drawStars", import.meta.url), { type: "module" });
 
     starsWorker.onmessage = (event) => {
@@ -103,8 +135,16 @@ const CanvasBackground = React.memo(() => {
     };
 
     starsWorker.postMessage("draw stars");
+  }
 
+  useEffect(() => {
+    drawStars();
   }, [rotatingBoxes]);
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeCanvas);
+    return () => window.removeEventListener("resize", resizeCanvas);
+  }, []);
 
 
   return <canvas ref={mainCanvasRef} className="top-0 left-0 fixed w-screen h-screen" />;
