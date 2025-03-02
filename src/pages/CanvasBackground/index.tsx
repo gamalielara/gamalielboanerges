@@ -101,6 +101,7 @@ const CanvasBackground = React.memo(() => {
     sceneRef.current.add(pointLight, ambientLight);
 
     controllerRef.current = new OrbitControls(cameraRef.current, rendererRef.current.domElement);
+    controllerRef.current.enableRotate = false;
   }, []);
 
   useEffect(() => {
@@ -147,7 +148,7 @@ const CanvasBackground = React.memo(() => {
   }, []);
 
 
-  return <canvas ref={mainCanvasRef} className="top-0 left-0 fixed w-screen h-screen" />;
+  return <canvas ref={mainCanvasRef} className="top-0 left-0 fixed w-screen h-screen -z-10" />;
 });
 
 export default CanvasBackground;

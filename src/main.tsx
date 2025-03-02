@@ -6,7 +6,7 @@ import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("main-content") as HTMLElement);
 root.render(
   <>
-    <CanvasBackground/>
     <App/>
+    <CanvasBackground/>
   </>
 );

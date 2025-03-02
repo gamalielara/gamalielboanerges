@@ -1,5 +1,5 @@
-import THREE from "three";
 import { useEffect, useRef } from "react";
+import THREE from "three";
 
 export default (camera: THREE.Camera | undefined) => {
   const lastScrollTop = useRef(0);
@@ -8,8 +8,10 @@ export default (camera: THREE.Camera | undefined) => {
     if ( !camera ) return;
 
     document.addEventListener("scroll", () => {
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      if ( st > lastScrollTop.current ) {
+      const st = window.scrollY || document.documentElement.scrollTop;
+      console.log({st});
+
+      if (st > lastScrollTop.current) {
         // downscroll code
         camera.position.z += ( st - lastScrollTop.current );
       } else if ( st < lastScrollTop.current ) {
