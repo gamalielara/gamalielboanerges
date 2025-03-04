@@ -16,7 +16,6 @@ const CanvasBackground = React.memo(() => {
   const cameraRef = useRef<THREE.PerspectiveCamera>();
   const rendererRef = useRef<THREE.WebGLRenderer>();
   const controllerRef = useRef<typeof OrbitControls>();
-  const starsRef = useRef<THREE.Points | null>(null);
   const requestAnimId = useRef<number>();
 
   const rotatingBoxes = useRotatingBoxes(sceneRef.current);
@@ -66,17 +65,6 @@ const CanvasBackground = React.memo(() => {
     if (rendererRef.current) {
       rendererRef.current.setSize(window.innerWidth, window.innerHeight);
     }
-
-    // Remove old stars before redrawing
-    if (starsRef.current) {
-      sceneRef.current.remove(starsRef.current);
-      starsRef.current.geometry.dispose();
-      starsRef.current.material.dispose();
-      starsRef.current = null;
-    }
-
-    // Redraw stars
-    drawStars();
   };
 
   // First set up
@@ -143,7 +131,6 @@ const CanvasBackground = React.memo(() => {
   }, [rotatingBoxes]);
 
   useEffect(() => {
-    window.addEventListener("resize", resizeCanvas);
     return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 

@@ -5,7 +5,7 @@ const MainSection: React.FC<PropsWithChildren<React.DetailedHTMLProps<React.HTML
   ...props
 }) => {
   return (
-    <section  {...props} className="relative w-screen min-h-screen flex justify-center mb-16 pt-[12vh]">
+    <section  {...props} className="relative w-screen h-screen overflow-y-scroll overflow-x-hidden flex justify-center mb-16 pt-[12vh] relative">
       {children}
     </section>
   );

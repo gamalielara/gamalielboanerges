@@ -162,7 +162,6 @@ button:focus-visible {
     }
 }
 
-/* in IOS window.innerHeight does not include the broswer bar */
-#main-content > canvas {
-    height: 100vh !important;
+#main-content{
+    width: 100vw;
 }
