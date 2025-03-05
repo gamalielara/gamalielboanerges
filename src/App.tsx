@@ -4,11 +4,10 @@ import CanvasBackground from "<pages>/CanvasBackground";
 import PortfolioPage from "<pages>/Portfolio";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage";
-import "./App.css"
+import "./App.css";
 
 function App() {
   useEffect(() => {
-    console.log("HAHAHA");
     const reloadWindow = () => window.location.reload();
 
     window.addEventListener("resize", () => reloadWindow);
