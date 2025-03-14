@@ -1,6 +1,6 @@
 import myPhoto from "<assets>/my_photo.jpg";
 import MainSection from "<components>/MainSection";
-import { CONTENT } from "<utils>/constants/text.ts";
+import { CONTENTText } from "<utils>/constants/text";
 
 const AboutPage = () => {
   return (
@@ -20,12 +20,12 @@ const AboutPage = () => {
           </div>
           <p
             className="text-justify mt-4 md:mr-4 lg:mr-8 lg:flex-[2] md:flex-[2] text-sm md:text-base lg:text-xl"
-            dangerouslySetInnerHTML={{ __html: CONTENT.about.textContent }}
+            dangerouslySetInnerHTML={{ __html: CONTENTText.about.textContent }}
           />
         </div>
 
         <p className="mt-4 text-sm md:text-base lg:text-2xl">
-          <em>Interests:<b>{CONTENT.about.interest.join(", ")}</b></em></p>
+          <em>Interests:<b>{CONTENTText.about.interest.join(", ")}</b></em></p>
       </div>
 
     </MainSection>

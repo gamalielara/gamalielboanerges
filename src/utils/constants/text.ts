@@ -1,12 +1,7 @@
-interface IText {
-  about: {
-    textContent: string;
-    interest: string[];
-    myPhoto: string;
-  };
-}
+import { IContentText } from "<utils>/types";
 
-const ENGLISH_TEXT: IText = {
+
+export const CONTENTText: IContentText = {
   about: {
     textContent: `
         A Frontend Engineer who worked a lot with user-facing features in Gamification Team Frontend Shopee Indonesia. He played a key role in the development of major gamification features such as Lucky Draw (React Native) and Buyer Mission (React Web), collaborating with designers to translate the feature’s UI design in Figma into reality in React Native or React Web environment.
@@ -20,7 +15,6 @@ const ENGLISH_TEXT: IText = {
       "Translation"
     ],
     myPhoto: "18gMa66bwgZCrOaXfcY70MaoOT8vOr_Vm"
-  }
+  },
+  portfolio: {}
 };
-
-export const CONTENT = ENGLISH_TEXT;
