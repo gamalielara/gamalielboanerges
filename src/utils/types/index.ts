@@ -1,5 +1,6 @@
 export interface IContentText {
   about: {
+    pageName: string;
     textContent: string;
     interest: string[];
     myPhoto: string;
@@ -8,8 +9,5 @@ export interface IContentText {
 }
 
 export interface IPortfolio {
-  name: string[];
-  tag: string[];
-  description: string[];
-  media: string[];
+  pageName: string;
 }

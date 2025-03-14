@@ -1,13 +1,13 @@
 import myPhoto from "<assets>/my_photo.jpg";
 import MainSection from "<components>/MainSection";
-import { CONTENTText } from "<utils>/constants/text";
+import { CONTENT_TEXT } from "<utils>/constants/text";
 
 const AboutPage = () => {
   return (
     <MainSection id="about-me">
       <div className="md:px-8 lg:px-32 items-baseline flex flex-col justify-center h-fit">
 
-        <p className="text-5xl font-bold w-full text-center italic mb-8">ABOUT ME</p>
+        <p className="text-5xl font-bold w-full text-center italic mb-8">{CONTENT_TEXT.about.pageName.toUpperCase()}</p>
 
         <div className="flex flex-col md:flex-row-reverse md:ml-4 md:mr-0 mx-2 items-center">
           <div
@@ -20,12 +20,12 @@ const AboutPage = () => {
           </div>
           <p
             className="text-justify mt-4 md:mr-4 lg:mr-8 lg:flex-[2] md:flex-[2] text-sm md:text-base lg:text-xl"
-            dangerouslySetInnerHTML={{ __html: CONTENTText.about.textContent }}
+            dangerouslySetInnerHTML={{ __html: CONTENT_TEXT.about.textContent }}
           />
         </div>
 
         <p className="mt-4 text-sm md:text-base lg:text-2xl">
-          <em>Interests:<b>{CONTENTText.about.interest.join(", ")}</b></em></p>
+          <em>Interests:<b>{CONTENT_TEXT.about.interest.join(", ")}</b></em></p>
       </div>
 
     </MainSection>

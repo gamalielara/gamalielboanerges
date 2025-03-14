@@ -2,7 +2,7 @@ import MainSection from "<components>/MainSection";
 
 const HomePage: React.FC = () => (
   <>
-   <MainSection id="landing">
+   <MainSection id="landing" className="flex flex-col justify-end">
       <p className="text-xl font-bold w-full text-center mb-8 mt-auto">Front-End Software Engineer, Android Developer, Writer, Translator</p>
     </MainSection>
   </>
