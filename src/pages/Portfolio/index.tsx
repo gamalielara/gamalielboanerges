@@ -38,7 +38,7 @@ const PortfolioPage = () => {
         { CONTENT_TEXT.portfolio.pageName.toUpperCase() }
       </p>
 
-      <div className={ `overflow-x-hidden w-[90vw] h-[70vh] mx-auto` }>
+      <div className={ `overflow-x-hidden w-[90vw] h-[70dvh] mx-auto` }>
         <div className="w-fit flex h-full">
           {
             portfolio.map((project, index) => {
