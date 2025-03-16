@@ -54,7 +54,8 @@ const PortfolioPage = () => {
                   } }
                   className="lg:px-8 md:px-4 px-2 mr-4 bg-gray-600/50 w-[90vw] h-full rounded-lg  p-4 overflow-x-hidden overflow-y-scroll"
                 >
-                  <h1 className="text-2xl md:text-4xl font-bold mb-4">{ project.name }</h1>
+                  <h1 className="text-2xl md:text-4xl font-bold mb-1">{ project.name }</h1>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-4">{ project.year }</h3>
                   <div className="tags flex flex-wrap">
                     { project.tags.map(tag => (
                       <ProjectTag
@@ -86,7 +87,7 @@ const PortfolioPage = () => {
                   </p>
 
 
-                  <div className="project-gallery mt-8 flex overflow-x-scroll">
+                  <div className="project-gallery mt-8 flex justify-center items-center overflow-x-scroll">
                     {
                       Object.entries(project.gallery).map(([ imgPath, desc ]) => {
                         return (
