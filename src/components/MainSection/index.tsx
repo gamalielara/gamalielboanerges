@@ -1,3 +1,4 @@
+import { SECTION_TOP_PADDING } from "<utils>/constants";
 import React, { PropsWithChildren } from "react";
 
 const MainSection: React.FC<PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>>> = ({
@@ -5,7 +6,7 @@ const MainSection: React.FC<PropsWithChildren<React.DetailedHTMLProps<React.HTML
   ...props
 }) => {
   return (
-    <section  {...props} className={ "relative w-screen h-screen overflow-y-scroll overflow-x-hidden mb-16 pt-[12vh] " + props.className }>
+    <section  {...props} className={ `relative w-screen h-screen overflow-y-scroll overflow-x-hidden mb-16 pt-[${SECTION_TOP_PADDING}] ` + props.className }>
       {children}
     </section>
   );

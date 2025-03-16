@@ -37,7 +37,7 @@ const PortfolioPage = () => {
         { CONTENT_TEXT.portfolio.pageName.toUpperCase() }
       </p>
 
-      <div className="overflow-x-hidden w-[75vw] h-[50vh] mx-auto">
+      <div className={ `overflow-x-hidden w-[90vw] h-[70vh] mx-auto` }>
         <div className="w-fit flex h-full">
           {
             portfolio.map((project, index) => {
@@ -52,7 +52,7 @@ const PortfolioPage = () => {
                       });
                     }
                   } }
-                  className="lg:px-8 md:px-4 px-2 mr-4 bg-gray-600/50 w-[75vw] h-full rounded-lg  p-4 overflow-x-hidden overflow-y-scroll"
+                  className="lg:px-8 md:px-4 px-2 mr-4 bg-gray-600/50 w-[90vw] h-full rounded-lg  p-4 overflow-x-hidden overflow-y-scroll"
                 >
                   <h1 className="text-2xl md:text-4xl font-bold mb-4">{ project.name }</h1>
                   <div className="tags flex flex-wrap">
@@ -65,7 +65,7 @@ const PortfolioPage = () => {
                   </div>
                   <p className="mt-8 text-sm md:text-base">
                     <strong>Project Description:</strong>
-                    <p dangerouslySetInnerHTML={ { __html: project.description } }/>
+                    <p dangerouslySetInnerHTML={ { __html: project.description } } className="text-align-justify"/>
                   </p>
 
                   <p className="mt-8 text-sm md:text-base">
@@ -74,6 +74,21 @@ const PortfolioPage = () => {
                       { project.tech_stacks.map((techStack) => <li>{ techStack }</li>) }
                     </ul>
                   </p>
+
+                  <div className="project-gallery mt-8 flex overflow-x-scroll">
+                    {
+                      Object.entries(project.gallery).map(([ imgPath, desc ]) => {
+                        return (
+                          <img
+                            loading="lazy"
+                            alt={ desc }
+                            className="object-cover w-1/2 md:w-1/6 mx-4 rounded-lg first:ml-0"
+                            src={ `/projects/${ imgPath }` }
+                          />
+                        );
+                      })
+                    }
+                  </div>
                 </article>
               );
             })
@@ -84,14 +99,14 @@ const PortfolioPage = () => {
         <button className="mr-4 hover:border-transparent active:border-transparent" onClick={handleScrollLeft}>
           <img
             src={ arrowLeft }
-            className="w-10 h-10 invert"
+            className="md:w-10 md:h-10 w-6 h-6 invert"
             alt="Previous Project"
           />
         </button>
         <button className="ml-4 hover:border-transparent active:border-transparent" onClick={handleScrollRight}>
           <img
             src={ arrowRight }
-            className="w-10 h-10 invert"
+            className="md:w-10 md:h-10 w-6 h-6 invert"
             alt="Next Project"
           />
         </button>
