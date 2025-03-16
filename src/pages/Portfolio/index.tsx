@@ -1,6 +1,7 @@
 import arrowLeft from "<assets>/svg/arrow-left.svg";
 import arrowRight from "<assets>/svg/arrow-right.svg";
 import MainSection from "<components>/MainSection";
+import PortfolioGalleryItem from "<components>/PortfolioGalleryItem";
 import ProjectTag from "<components>/ProjectTag";
 import { PORTFOLIO_MANIFEST } from "<utils>/constants/portfolioManifest";
 import { CONTENT_TEXT } from "<utils>/constants/text";
@@ -82,20 +83,18 @@ const PortfolioPage = () => {
                   <p className="mt-8 text-sm md:text-base">
                     <strong>My Contributions:</strong>
                     <ul className="list-disc pl-4">
-                      { project.my_contribution.map((contribution) => <li dangerouslySetInnerHTML={{__html: contribution}}/>) }
+                      { project.my_contribution.map((contribution) =>
+                        <li dangerouslySetInnerHTML={ { __html: contribution } }/>) }
                     </ul>
                   </p>
 
-
-                  <div className="project-gallery mt-8 flex justify-center items-center overflow-x-scroll">
+                  <div className="project-gallery mt-8 flex items-center overflow-x-scroll">
                     {
-                      Object.entries(project.gallery).map(([ imgPath, desc ]) => {
+                      Object.entries(project.gallery).map(([ imgSrcPath, desc ]) => {
                         return (
-                          <img
-                            loading="lazy"
-                            alt={ desc }
-                            className="object-cover w-1/2 md:w-1/6 mx-4 rounded-lg first:ml-0"
-                            src={ `/projects/${ imgPath }` }
+                          <PortfolioGalleryItem
+                            imgSrc={ imgSrcPath }
+                            desc={ desc }
                           />
                         );
                       })
