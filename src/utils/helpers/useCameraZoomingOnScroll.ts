@@ -7,6 +7,8 @@ export default (camera: THREE.Camera | undefined) => {
   useEffect(() => {
     if ( !camera ) return;
 
+    const controller = new AbortController();
+
     document.addEventListener("scroll", () => {
       const st = window.scrollY || document.documentElement.scrollTop;
       console.log({st});
@@ -19,7 +21,11 @@ export default (camera: THREE.Camera | undefined) => {
         camera.position.z += ( st - lastScrollTop.current );
       } // else was horizontal scroll
       lastScrollTop.current = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+    }, {
+      signal: controller.signal
     });
+
+    return () => controller.abort();
   }, [ camera ]);
 
 }

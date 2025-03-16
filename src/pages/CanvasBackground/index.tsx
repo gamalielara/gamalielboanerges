@@ -1,14 +1,17 @@
+import { decideCameraMagnifier } from "<utils>/decideCameraMagnifier";
+import useCameraZoomingOnScroll from "<utils>/helpers/useCameraZoomingOnScroll.ts";
+import useRotatingBoxes from "<utils>/helpers/useRotatingBoxes.ts";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { decideCameraMagnifier } from "<utils>/decideCameraMagnifier";
-import React, { useEffect, useRef } from "react";
-import useRotatingBoxes from "<utils>/helpers/useRotatingBoxes.ts";
-import useCameraZoomingOnScroll from "<utils>/helpers/useCameraZoomingOnScroll.ts";
 
 const CAMERA_ZOOM_MAGNIFIER = decideCameraMagnifier();
 const ZOOMING_OUT_SPEED = 0.2;
 
+
 const CanvasBackground = React.memo(() => {
+  console.log({CAMERA_ZOOM_MAGNIFIER});
+
   console.log("canvas rendered");
 
   const mainCanvasRef = useRef<HTMLCanvasElement>(null);
