@@ -1,4 +1,6 @@
-export const PORTFOLIO_MANIFEST = {
+import { IPortfolioManifest } from "<utils>/types";
+
+export const PORTFOLIO_MANIFEST: IPortfolioManifest = {
   "portfolio": [
     {
       "name": "Shopee Lucky Draw",
@@ -23,7 +25,12 @@ export const PORTFOLIO_MANIFEST = {
         "luckydraw/5.png": 'Integration Lucky Draw ith Ads Page + Order Incentive (CTA Button)',
         "luckydraw/6.gif": 'Integration Lucky Draw ith Ads Page + Order Incentive E2E flow',
         "luckydraw/7.gif": 'Lucky Draw Three Eggs Mode used in Shopee Taiwan'
-      }
+      },
+      "my_contribution": [
+        "Involved in <b>9/11</b> Lucky Draw features, serving SEA + LATAM countries",
+        "<b>Initiated and led integration testing</b> implementation in Lucky Draw, scaling from <b>0 to 303+ test cases, with 90.1% code coverage</b>",
+        "<b>Optimized Jest and RNTL testing runtime</b>, cutting testing runtime <b>by 76% (~300s to ~70s)</b> in CI, leading to faster deployments and a more efficient CI/CD process"
+      ]
     },
   ]
 }

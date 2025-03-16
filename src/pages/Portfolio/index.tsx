@@ -65,7 +65,10 @@ const PortfolioPage = () => {
                   </div>
                   <p className="mt-8 text-sm md:text-base">
                     <strong>Project Description:</strong>
-                    <p dangerouslySetInnerHTML={ { __html: project.description } } className="text-align-justify"/>
+                    <p
+                      dangerouslySetInnerHTML={ { __html: project.description } }
+                      className="text-align-justify"
+                    />
                   </p>
 
                   <p className="mt-8 text-sm md:text-base">
@@ -74,6 +77,14 @@ const PortfolioPage = () => {
                       { project.tech_stacks.map((techStack) => <li>{ techStack }</li>) }
                     </ul>
                   </p>
+
+                  <p className="mt-8 text-sm md:text-base">
+                    <strong>My Contributions:</strong>
+                    <ul className="list-disc pl-4">
+                      { project.my_contribution.map((contribution) => <li dangerouslySetInnerHTML={{__html: contribution}}/>) }
+                    </ul>
+                  </p>
+
 
                   <div className="project-gallery mt-8 flex overflow-x-scroll">
                     {
@@ -96,7 +107,10 @@ const PortfolioPage = () => {
         </div>
       </div>
       <div className="w-full flex justify-center mt-8">
-        <button className="mr-4 hover:border-transparent active:border-transparent" onClick={handleScrollLeft}>
+        <button
+          className="mr-4 hover:border-transparent active:border-transparent"
+          onClick={ handleScrollLeft }
+        >
           <img
             src={ arrowLeft }
             className="md:w-10 md:h-10 w-6 h-6 invert"
