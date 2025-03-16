@@ -19,7 +19,7 @@ interface IPortfolioItem{
   tech_stacks: string[];
   description: string;
   gallery: Record<string, string>; // Key-value pair for image paths and descriptions
-  my_contribution: string[];
+  my_contribution?: string[];
 }
 
 export interface IPortfolioManifest {

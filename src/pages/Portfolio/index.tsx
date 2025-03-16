@@ -45,12 +45,16 @@ const PortfolioPage = () => {
               return (
                 <article
                   ref={ (el) => {
+                    if (!el) return;
+
                     if (selectedProjectIndex === index) {
-                      el?.scrollIntoView({
+                      el.scrollIntoView({
                         inline: "end",
                         behavior: "smooth",
                         block: "nearest"
                       });
+
+                      el.scrollTo({ top: 0, behavior: "smooth" });
                     }
                   } }
                   className="lg:px-8 md:px-4 px-2 mr-4 bg-gray-600/50 w-[90vw] h-full rounded-lg  p-4 overflow-x-hidden overflow-y-scroll"
@@ -80,13 +84,17 @@ const PortfolioPage = () => {
                     </ul>
                   </p>
 
-                  <p className="mt-8 text-sm md:text-base">
-                    <strong>My Contributions:</strong>
-                    <ul className="list-disc pl-4">
-                      { project.my_contribution.map((contribution) =>
-                        <li dangerouslySetInnerHTML={ { __html: contribution } }/>) }
-                    </ul>
-                  </p>
+                  {
+                    project.my_contribution && (
+                      <p className="mt-8 text-sm md:text-base">
+                        <strong>My Contributions:</strong>
+                        <ul className="list-disc pl-4">
+                          { project.my_contribution.map((contribution) =>
+                            <li dangerouslySetInnerHTML={ { __html: contribution } }/>) }
+                        </ul>
+                      </p>
+                    )
+                  }
 
                   <div className="project-gallery mt-8 flex items-center overflow-x-scroll justify-evenly">
                     {
@@ -95,6 +103,7 @@ const PortfolioPage = () => {
                           <PortfolioGalleryItem
                             imgSrc={ imgSrcPath }
                             desc={ desc }
+                            standalone={Object.keys(project.gallery).length === 1}
                           />
                         );
                       })
@@ -108,7 +117,7 @@ const PortfolioPage = () => {
       </div>
       <div className="w-full flex justify-center mt-8">
         <button
-          className="mr-4 hover:border-transparent active:border-transparent"
+          className="mr-4 hover:border-transparent focus:outline-none active:outline-none"
           onClick={ handleScrollLeft }
         >
           <img
@@ -117,7 +126,10 @@ const PortfolioPage = () => {
             alt="Previous Project"
           />
         </button>
-        <button className="ml-4 hover:border-transparent active:border-transparent" onClick={handleScrollRight}>
+        <button
+          className="ml-4 hover:border-transparent active:border-transparent focus:outline-none active:outline-none"
+          onClick={ handleScrollRight }
+        >
           <img
             src={ arrowRight }
             className="md:w-10 md:h-10 w-6 h-6 invert"
