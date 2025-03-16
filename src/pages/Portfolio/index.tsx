@@ -88,7 +88,7 @@ const PortfolioPage = () => {
                     </ul>
                   </p>
 
-                  <div className="project-gallery mt-8 flex items-center overflow-x-scroll">
+                  <div className="project-gallery mt-8 flex items-center overflow-x-scroll justify-evenly">
                     {
                       Object.entries(project.gallery).map(([ imgSrcPath, desc ]) => {
                         return (
