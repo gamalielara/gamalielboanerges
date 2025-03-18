@@ -1,8 +1,7 @@
 import arrowLeft from "<assets>/svg/arrow-left.svg";
 import arrowRight from "<assets>/svg/arrow-right.svg";
 import MainSection from "<components>/MainSection";
-import PortfolioGalleryItem from "<components>/PortfolioGalleryItem";
-import ProjectTag from "<components>/ProjectTag";
+import PortfolioBox from "<components>/PortfolioBox";
 import { PORTFOLIO_MANIFEST } from "<utils>/constants/portfolioManifest";
 import { CONTENT_TEXT } from "<utils>/constants/text";
 import { useState } from "react";
@@ -41,75 +40,24 @@ const PortfolioPage = () => {
       <div className={ `overflow-x-hidden w-[90vw] h-[70dvh] mx-auto` }>
         <div className="w-fit flex h-full">
           {
-            portfolio.map((project, index) => {
+            portfolio.map((portfolioItem, index) => {
+              // Scroll to the selected portfolio when the arrow button is clicked
+              const articleRef = (el: HTMLDivElement | null) => {
+                if (!el) return;
+
+                if (selectedProjectIndex === index) {
+                  el.scrollIntoView({
+                    inline: "end",
+                    behavior: "smooth",
+                    block: "nearest"
+                  });
+
+                  el.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              };
+
               return (
-                <article
-                  ref={ (el) => {
-                    if (!el) return;
-
-                    if (selectedProjectIndex === index) {
-                      el.scrollIntoView({
-                        inline: "end",
-                        behavior: "smooth",
-                        block: "nearest"
-                      });
-
-                      el.scrollTo({ top: 0, behavior: "smooth" });
-                    }
-                  } }
-                  className="lg:px-8 md:px-4 px-2 mr-4 bg-gray-600/50 w-[90vw] h-full rounded-lg  p-4 overflow-x-hidden overflow-y-scroll"
-                >
-                  <h1 className="text-2xl md:text-4xl font-bold mb-1">{ project.name }</h1>
-                  <h3 className="text-xl md:text-2xl font-semibold mb-4">{ project.year }</h3>
-                  <div className="tags flex flex-wrap">
-                    { project.tags.map(tag => (
-                      <ProjectTag
-                        key={ tag }
-                        tagName={ tag }
-                      />
-                    )) }
-                  </div>
-                  <p className="mt-8 text-sm md:text-base">
-                    <strong>Project Description:</strong>
-                    <p
-                      dangerouslySetInnerHTML={ { __html: project.description } }
-                      className="text-align-justify"
-                    />
-                  </p>
-
-                  <p className="mt-8 text-sm md:text-base">
-                    <strong>Tech Stacks:</strong>
-                    <ul className="list-disc pl-4">
-                      { project.tech_stacks.map((techStack) => <li>{ techStack }</li>) }
-                    </ul>
-                  </p>
-
-                  {
-                    project.my_contribution && (
-                      <p className="mt-8 text-sm md:text-base">
-                        <strong>My Contributions:</strong>
-                        <ul className="list-disc pl-4">
-                          { project.my_contribution.map((contribution) =>
-                            <li dangerouslySetInnerHTML={ { __html: contribution } }/>) }
-                        </ul>
-                      </p>
-                    )
-                  }
-
-                  <div className="project-gallery mt-8 flex items-center overflow-x-scroll justify-evenly">
-                    {
-                      Object.entries(project.gallery).map(([ imgSrcPath, desc ]) => {
-                        return (
-                          <PortfolioGalleryItem
-                            imgSrc={ imgSrcPath }
-                            desc={ desc }
-                            standalone={Object.keys(project.gallery).length === 1}
-                          />
-                        );
-                      })
-                    }
-                  </div>
-                </article>
+                <PortfolioBox { ...portfolioItem } ref={ articleRef }/>
               );
             })
           }

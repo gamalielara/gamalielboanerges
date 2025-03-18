@@ -12,7 +12,7 @@ interface IPortfolioPage {
   pageName: string;
 }
 
-interface IPortfolioItem{
+export interface IPortfolioItem {
   name: string;
   year: string;
   tags: string[];
@@ -20,6 +20,8 @@ interface IPortfolioItem{
   description: string;
   gallery: Record<string, string>; // Key-value pair for image paths and descriptions
   my_contribution?: string[];
+  project_link?: string;
+  project_source_code?: string;
 }
 
 export interface IPortfolioManifest {

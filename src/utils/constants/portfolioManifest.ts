@@ -81,10 +81,10 @@ export const PORTFOLIO_MANIFEST: IPortfolioManifest = {
         "buyer-mission/2.png": 'Redeem Store to exchange Mission Point with available rewards',
       },
       "my_contribution": [
-        "Involved in <b>9/11</b> Lucky Draw features, serving SEA + LATAM countries",
-        "Handle integration between Lucky Draw Iframe and Fullpage through redirection LD Iframe - Full Page",
-        "<b>Initiated and led integration testing</b> implementation in Lucky Draw, scaling from <b>0 to 303+ test cases, with 90.1% code coverage</b>",
-        "Specifically worked in Lucky Draw iframe <b><em>Three Egg Mode</em></b> that is often used in Taiwan as their Business As Usual campaign",
+        "Involved in Buyer Mission web performance by <b>reducing the FCP time to 30%</b>",
+        "Contributed in <b>15+ features</b> in Buyer Mission, serving in SEA + LATAM countries (Indonesia, Malaysia, Philliphines, Thailand, Taiwan, Brazil)",
+        '<b>Collaborated with Shopee Video  & Shopee Live team</b> (Regional & SZ team) to integrate Buyer Mission with task `Watch Livestream` and `Watch Shopee Video"',
+        "Worked in Buyer Mission Leaderboard page, which was used as a big campaign in Indonesia. Translated 8 Figma design into real code"
       ]
     },
     // {
@@ -133,8 +133,31 @@ export const PORTFOLIO_MANIFEST: IPortfolioManifest = {
           A personal blog I created in 2021 when <b>I first taught myself web programming</b>. Released on November 1, 2021, it is still maintained and revamped every year. I mostly write about books and movies I find interesting here.
           Supports <b>like and comment</b> on an article and <b>light/dark mode</b> UI preference.
       `,
+      "project_link": "https://www.gumrindelwald.com",
+      "project_source_code": "https://github.com/gamalielara/gumrindelwald-blog",
       "gallery": {
         "gumrindelwald/1.gif": "gumrindelwald blog's Landing Page E2E flow. User can see blog cards and set dark/light mode preference."
+      },
+    },
+    {
+      "name": "folklorevermore chess",
+      "year": "2021",
+      "tags": [
+        "Personal Project",
+        "Javascript",
+        "Game Development"
+      ],
+      "tech_stacks": [
+        "TypeScript",
+        "Webpack"
+      ],
+      "description": `
+          My first web project: a regular chess game created by vanilla HTML, CSS, JavaScript
+      `,
+      "project_link": "https://gamalielara.github.io/folklorevermore-chess/",
+      "project_source_code": "https://github.com/gamalielara/folklorevermore-chess",
+      "gallery": {
+        "folklorevermore-chess/1.gif": "A chess game I created E2E flow. Written using vanila HTML, CSS, JS."
       },
     },
   ]
