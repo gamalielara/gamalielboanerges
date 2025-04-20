@@ -1,9 +1,8 @@
-const STATIC_CACHE_NAME = "cache-static-v1";
-const DYNAMIC_CACHE_NAME = "cache-dynamic-v1";
+const STATIC_CACHE_NAME = "cache-static-v0";
+const DYNAMIC_CACHE_NAME = "cache-dynamic-v0";
 
 const STATIC_FILES = [
 		self.location.origin + "/",
-		self.location.origin + "/main.css",
 		self.location.origin + "/icon.png",
 		self.location.origin + "/projects/luckydraw/1.png",
 		self.location.origin + "/projects/luckydraw/2.png",
@@ -22,7 +21,7 @@ const STATIC_FILES = [
 		"https://fonts.gstatic.com/s/jetbrainsmono/v20/tDbp2o-flEEny0FZhsfKu5WU4xD-IQ-PuZJJXxfpAO-LfjGbsVNLG7DGdF6OZ1PszQMgseyXF_Gl.woff2"
 ];
 
-const STATIC_FILES_FORMAT = /\.(jpe?g|png|gif|mp4|svg|webp)/i;
+const STATIC_FILES_FORMAT = /\/assets\//i;
 
 self.addEventListener("install", (e) => {
 		// Wait the event install until the callback inside is resolved
@@ -30,13 +29,9 @@ self.addEventListener("install", (e) => {
 				caches.open(STATIC_CACHE_NAME).then((cache) => {
 						console.log("Cache installed. ", cache);
 
-						const stack = [];
-
-						STATIC_FILES.forEach(file => stack.push(
-								cache.add(file).catch(_ => console.error(`can't load ${file} to cache`))
-						));
-						return Promise.all(stack);
-
+						cache.addAll(STATIC_FILES).then(() => {
+								console.log("Caching all files, done!");
+						});
 				})
 		);
 });
@@ -46,7 +41,7 @@ self.addEventListener("activate", (e) => {
 				caches.keys().then(keys => {
 						return Promise.all(
 								keys
-										.filter(key => key !== STATIC_CACHE_NAME)
+										.filter(key => key !== STATIC_CACHE_NAME && key !== DYNAMIC_CACHE_NAME)
 										.map(key => caches.delete(key))
 						);
 				})
@@ -60,10 +55,11 @@ self.addEventListener("fetch", (e) => {
 								return cache ||
 										fetch(e.request).then(fetchRes => {
 												const clonedResponse = fetchRes.clone();
-												const isImageFile = STATIC_FILES_FORMAT.test(e.request.url);
+
+												const isStaticFile = STATIC_FILES_FORMAT.test(e.request.url);
 
 
-												if (isImageFile) {
+												if (isStaticFile) {
 														caches.open(DYNAMIC_CACHE_NAME).then(c => {
 																// We cannot store the fetchResponse to the cache and return it to the client. It needs to be cloned.
 																c.put(e.request.url, clonedResponse);
