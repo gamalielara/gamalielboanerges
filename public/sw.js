@@ -18,8 +18,8 @@ const STATIC_FILES = [
 		self.location.origin + "/projects/buyer-mission/2.png",
 		self.location.origin + "/projects/gumrindelwald/1.gif",
 		self.location.origin + "/projects/folklorevermore-chess/1.gif",
-		// "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap",
-		// "https://fonts.gstatic.com/s/jetbrainsmono/v20/tDbp2o-flEEny0FZhsfKu5WU4xD-IQ-PuZJJXxfpAO-LfjGbsVNLG7DGdF6OZ1PszQMgseyXF_Gl.woff2"
+		"https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap",
+		"https://fonts.gstatic.com/s/jetbrainsmono/v20/tDbp2o-flEEny0FZhsfKu5WU4xD-IQ-PuZJJXxfpAO-LfjGbsVNLG7DGdF6OZ1PszQMgseyXF_Gl.woff2"
 ];
 
 const STATIC_FILES_FORMAT = /\.(jpe?g|png|gif|mp4|svg|webp)/i;
@@ -30,7 +30,13 @@ self.addEventListener("install", (e) => {
 				caches.open(STATIC_CACHE_NAME).then((cache) => {
 						console.log("Cache installed. ", cache);
 
-						cache.addAll(STATIC_FILES);
+						const stack = [];
+
+						STATIC_FILES.forEach(file => stack.push(
+								cache.add(file).catch(_ => console.error(`can't load ${file} to cache`))
+						));
+						return Promise.all(stack);
+
 				})
 		);
 });
