@@ -1,11 +1,15 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "node:path";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [ react() ],
   assetsInclude: [ "**/*.gltf", "**/*.glb" ],
+  build:{
+    sourcemap: false,
+    minify: "esbuild",
+  },
   resolve: {
     alias: {
       "<assets>": path.resolve(__dirname, "./src/assets"),
@@ -16,5 +20,8 @@ export default defineConfig({
   },
   server: {
     port: 1919
+  },
+  esbuild: {
+    drop: ["console"]
   }
 });
