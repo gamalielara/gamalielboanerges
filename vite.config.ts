@@ -28,6 +28,18 @@ export default defineConfig({
   build:{
     sourcemap: false,
     minify: "esbuild",
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        sw: path.resolve(__dirname, 'sw/index.ts') // your service worker
+      },
+      output: {
+        entryFileNames: chunk => {
+          if (chunk.name === "sw") return "sw.js"; // place it at root
+          return "assets/[name]-[hash].js";
+        }
+      }
+    }
   },
   resolve: {
     alias: {

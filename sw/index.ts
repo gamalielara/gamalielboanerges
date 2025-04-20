@@ -1,3 +1,7 @@
+/// <reference lib="webworker" />
+
+declare const self: ServiceWorkerGlobalScope
+
 const STATIC_CACHE_NAME = "cache-static-v0";
 const DYNAMIC_CACHE_NAME = "cache-dynamic-v0";
 
@@ -10,7 +14,6 @@ const jetBrainsMonoFontUrls = [
 		"https://fonts.gstatic.com/s/jetbrainsmono/v20/tDbp2o-flEEny0FZhsfKu5WU4xD-IQ-PuZJJXxfpAO-LfjGbsVNLG7DGdF6OZ1PswAMgseyXFw.woff2",
 		"https://fonts.gstatic.com/s/jetbrainsmono/v20/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwgknk-4.woff2"
 ];
-
 
 const STATIC_FILES = [
 		self.location.origin + "/",
@@ -85,3 +88,6 @@ self.addEventListener("fetch", (e) => {
 				)
 		);
 });
+
+// TS file must export something
+export default undefined
