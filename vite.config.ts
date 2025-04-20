@@ -4,7 +4,26 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [ react() ],
+  plugins: [ react({
+    // @ts-ignore
+    swcOptions: {
+      jsc: {
+        transform: {
+          react: {
+            runtime: "automatic",
+          },
+        },
+        // Remove console.*
+        externalHelpers: false,
+        minify: {
+          compress: {
+            drop_console: true,
+          },
+        },
+      },
+      minify: true,
+    }
+  }) ],
   assetsInclude: [ "**/*.gltf", "**/*.glb" ],
   build:{
     sourcemap: false,
